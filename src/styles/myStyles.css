@@ -1,0 +1,7 @@
+@media (min-width: 768px) {
+  .my-form {
+    min-width: 20rem; /* Adjust as needed */
+    margin: auto;
+    background-color: #f9f9f9;
+  }
+}
