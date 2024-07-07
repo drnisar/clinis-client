@@ -54,5 +54,9 @@ class APIClient {
   // Add other methods like put, delete, etc. as needed
 }
 
-export const apiClient = new APIClient("http://localhost:3000/api");
+// export const apiClient = new APIClient("http://localhost:3000/api");
+export const apiClient = new APIClient(
+  "https://clinis-api-server.vercel.app/api"
+);
+
 // export default APIClient;

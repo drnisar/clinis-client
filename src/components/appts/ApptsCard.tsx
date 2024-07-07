@@ -2,37 +2,33 @@ import React from "react";
 import { Card } from "react-bootstrap";
 
 interface Props {
-  reg: {
-    name: string;
-    age: number;
-    gender: string;
-    email: string;
-    phone: string;
-    MRN: string;
-  };
-
-  appt: {
-    apptDate: string;
-    duration: number;
-    disease: string;
-    apptPlan: string;
-    comorbids: string;
-    socialConnect: string;
-    apptNotes: string;
-  };
+  name: string;
+  age: number;
+  gender: string;
+  email: string;
+  phone: string;
+  MRN: string;
+  apptDate: string;
+  disease: string;
+  apptPlan: string;
+  comorbids: string;
+  socialConnect: string;
+  apptNotes: string;
 }
 
 const ApptsCard = ({
-  reg: { name, age, gender, email, phone, MRN },
-  appt: {
-    apptDate,
-    duration,
-    disease,
-    apptPlan,
-    comorbids,
-    socialConnect,
-    apptNotes,
-  },
+  name,
+  age,
+  gender,
+  email,
+  phone,
+  MRN,
+  apptDate,
+  disease,
+  apptPlan,
+  comorbids,
+  socialConnect,
+  apptNotes,
 }: Props) => {
   return (
     <Card className="my-1">

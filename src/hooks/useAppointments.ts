@@ -1,5 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { apiClient } from "../components/api-client/apiClient";
+import { FormData } from "../components/appts/AppointmentForm";
 
 export interface Appointment {
   _id: string;
@@ -17,18 +19,63 @@ export interface Appointment {
   specialNotes: string;
 }
 
-const useAppointments = () => {
-  const fetchAppointments = async () => {
-    const data = await axios
-      .get<Appointment[]>("http://localhost:3000/api/appt")
-      .then((res) => res.data);
-    return data;
-  };
+// export const useGetAllAppointments = () => {
+//   const fetchAppointments = async () => {
+//     const data = await axios
+//       .get<Appointment[]>("http://localhost:3000/api/appt")
+//       .then((res) => res.data);
+//     return data;
+//   };
+
+//   return useQuery({
+//     queryKey: ["appointments"],
+//     queryFn: fetchAppointments,
+//   });
+// };
+
+export const useGetAllAppointments = () => {
+  const queryClient = useQueryClient();
 
   return useQuery({
     queryKey: ["appointments"],
-    queryFn: fetchAppointments,
+    queryFn: async () => {
+      const response = await apiClient.get("appt");
+
+      if (response.status !== 200) {
+        throw new Error("Error fetching Appointment List");
+      }
+
+      return response.data;
+    },
   });
 };
 
-export default useAppointments;
+export const useEditAppointment = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: FormData) => {
+      const { _id, ...rest } = data;
+      const response = await apiClient.put(`appt/${_id}`, rest);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries("appointments");
+    },
+  });
+};
+
+export const useCreateAppointment = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: async (data: FormData) => {
+      const response = await apiClient.post("appt", data);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries("appointments");
+    },
+  });
+  return mutation;
+};
+
+// export default useAppointments;

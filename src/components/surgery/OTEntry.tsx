@@ -21,6 +21,7 @@ const OTEntry = () => {
   const createOTEntry = useCreateOT();
 
   const onSubmit = (data: FormData) => {
+    data = { ...data, reg: _id };
     createOTEntry.mutate(data);
     navigate(`/registration/${_id}`);
   };
