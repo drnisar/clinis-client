@@ -1,28 +1,15 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Form,
-  ListGroup,
-  ListGroupItem,
-  Tab,
-  Table,
-} from "react-bootstrap";
+import { Button, Form, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import { useGetMeds, useTranslate } from "../../hooks/useMeds";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 
 const Prescription = () => {
-  const [medList, setMedList] = useState([]);
-  const [medObj, setMedObj] = useState({});
+  const [medList, setMedList] = useState<any[]>([]);
+  const [medObj, setMedObj] = useState({ details: [] });
 
-  const {
-    handleSubmit,
-    setFocus,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit, setFocus, control, reset } = useForm();
 
   useEffect(() => {
     setFocus("medName");
@@ -58,7 +45,7 @@ const Prescription = () => {
   const meds = useGetMeds();
   //   console.log(medObj);
 
-  const options = meds.data?.map((med: any) => ({
+  const options = (meds.data as any[])?.map((med: any) => ({
     value: med._id,
     label: med.name,
   }));
@@ -95,7 +82,7 @@ const Prescription = () => {
                       onChange={(selectedOption) => {
                         field.onChange(selectedOption);
                         const selectedMed =
-                          meds.data?.find(
+                          (meds.data as any[])?.find(
                             (med: any) => med._id === selectedOption.value
                           ) || {};
                         setMedObj(selectedMed);

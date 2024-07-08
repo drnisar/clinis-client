@@ -1,8 +1,7 @@
-import React from "react";
-import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useAuth } from "../components/login/AuthContext";
+import { Nav, Navbar } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../components/login/AuthContext";
 
 const NavBar = () => {
   const { username, setUsername } = useAuth();

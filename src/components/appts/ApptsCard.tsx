@@ -1,4 +1,3 @@
-import React from "react";
 import { Card } from "react-bootstrap";
 
 interface Props {
@@ -16,20 +15,7 @@ interface Props {
   apptNotes: string;
 }
 
-const ApptsCard = ({
-  name,
-  age,
-  gender,
-  email,
-  phone,
-  MRN,
-  apptDate,
-  disease,
-  apptPlan,
-  comorbids,
-  socialConnect,
-  apptNotes,
-}: Props) => {
+const ApptsCard = ({ name, age, gender, apptDate, apptPlan }: Props) => {
   return (
     <Card className="my-1">
       <Card.Header>

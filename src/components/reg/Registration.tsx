@@ -1,4 +1,4 @@
-import { Link, NavLink, useLoaderData } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Reg } from "../../layouts/RegistrationLayout";
 
 interface Props {

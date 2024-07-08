@@ -1,17 +1,5 @@
-import React from "react";
+import { ListGroup } from "react-bootstrap";
 import { useGetAllAppointments } from "./queries";
-import { Accordion, Button, ListGroup } from "react-bootstrap";
-
-interface Appointment {
-  reg: {
-    name: string;
-    age: number;
-  };
-  appt: {
-    apptDate: string;
-    apptPlan: string;
-  };
-}
 
 const ApptsReportList = () => {
   const tab = "\u00A0\u00A0\u00A0\u00A0";

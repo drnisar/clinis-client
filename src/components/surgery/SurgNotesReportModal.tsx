@@ -1,12 +1,11 @@
-import React from "react";
+import { SurgeryNotesFormData } from "../../hooks/useOT";
 import ModalComponent from "../smallParts/ModalComponent";
 import SurgNotesReport from "./SurgNotesReport";
-import { SurgeryNotesFormData } from "../../hooks/useOT";
 
 interface SurgNotesReportModalProps {
   show: boolean;
   handleClose: () => void;
-  surgNotesData?: SurgeryNotesFormData;
+  surgNotesData: SurgeryNotesFormData;
 }
 
 const SurgNotesReportModal = ({

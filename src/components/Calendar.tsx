@@ -1,12 +1,10 @@
-import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import FullCalendar from "@fullcalendar/react";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import { useState } from "react";
-import { Alert, Button, CloseButton, Spinner } from "react-bootstrap";
-import useAppointments from "../hooks/useAppointments";
-import { useNavigate, useLocation } from "react-router-dom";
-import { end } from "@popperjs/core";
+import { Alert, CloseButton, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Calendar = () => {
   const [alertMessage, setAlertMessage] = useState("");
@@ -15,7 +13,7 @@ const Calendar = () => {
 
   const { data, error, isLoading } = useAppointments();
 
-  const calendarEvents = data?.map((appt) => ({
+  const calendarEvents = data?.map((appt: { name: any; date: any }) => ({
     title: appt.name,
     date: appt.date,
     name: appt.name,
@@ -70,3 +68,6 @@ const Calendar = () => {
 };
 
 export default Calendar;
+function useAppointments(): { data: any; error: any; isLoading: any } {
+  throw new Error("Function not implemented.");
+}

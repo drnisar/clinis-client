@@ -7,7 +7,7 @@ export const useCreateAppointment = () => {
   return useMutation({
     mutationFn: (data: FormData) => apiClient.post("appt", data),
     onSuccess: () => {
-      queryClient.invalidateQueries("appt");
+      queryClient.invalidateQueries({ queryKey: ["appt"] });
     },
   });
 };

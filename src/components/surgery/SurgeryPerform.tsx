@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import Clock from "../smallParts/Clock";
-import Timer from "../smallParts/Timer";
 
 interface SurgeryPerformProps {
   show: boolean;
@@ -28,8 +27,6 @@ const SurgeryPerform: React.FC<SurgeryPerformProps> = ({
   surgeryData,
 }) => {
   const [startSurgery, setStartSurgery] = useState("");
-  const [endSurgery, setEndSurgery] = useState<Date | null>(null);
-  const regId = surgeryData?.reg?._id;
   const name = surgeryData?.reg?.name;
   const gender = surgeryData?.reg?.gender;
   const age = surgeryData?.reg?.age;

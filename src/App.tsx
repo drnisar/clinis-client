@@ -1,9 +1,9 @@
 import { useState } from "react";
-import reactLogo from "./assets/appointment.png";
-import viteLogo from "/vite.svg";
+import { Button } from "react-bootstrap";
 import "./App.css";
-import { Button, Nav, Navbar } from "react-bootstrap";
+import reactLogo from "./assets/appointment.png";
 import NavBar from "./routing/NavBar";
+import viteLogo from "/vite.svg";
 
 function App() {
   const [count, setCount] = useState(0);

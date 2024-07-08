@@ -16,20 +16,20 @@ export const useAddDr = () => {
   return useMutation({
     mutationFn: (data: AddDrProps) => apiClient.post("drs", data),
     onSuccess: () => {
-      queryClient.invalidateQueries("drs");
+      queryClient.invalidateQueries({ queryKey: ["drs"] });
     },
-    onError: (err, newDr, context: any) => {
-      queryClient.setQueryData("drs", context.previousDrs);
+    onError: (context: any) => {
+      queryClient.setQueryData(["drs"], context.previousDrs);
     },
     onSettled: () => {
-      queryClient.invalidateQueries("drs");
+      queryClient.invalidateQueries({ queryKey: ["drs"] });
     },
   });
 };
 
 export const useGetAllDrs = () => {
   return useQuery({
-    queryKey: ["drs"],
+    queryKey: [["drs"]],
     queryFn: async () => {
       const response = await apiClient.get("drs");
       if (response.status !== 200) {

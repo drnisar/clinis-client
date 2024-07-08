@@ -1,6 +1,5 @@
-import React from "react";
 import { Button } from "react-bootstrap";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { apiClient } from "../api-client/apiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -13,7 +12,7 @@ const RegDelete = () => {
   const deleteMutation = useMutation({
     mutationFn: (_id: string) => apiClient.delete(`reg/${_id}`),
     onSuccess: () => {
-      queryClient.invalidateQueries("reg");
+      queryClient.invalidateQueries({ queryKey: ["reg"] });
       navigate(`/registration`);
     },
     onError: (error: any) => {

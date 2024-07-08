@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FieldValues, SubmitHandler, set, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import Joi from "joi";

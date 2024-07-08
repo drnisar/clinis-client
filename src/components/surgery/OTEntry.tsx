@@ -1,11 +1,10 @@
-import React from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { FormData, useCreateOT, useJoiSchema } from "../../hooks/useOT";
 import TextInput from "../smallParts/TextInput";
 import { joiResolver } from "@hookform/resolvers/joi";
 import SelectInput from "../smallParts/SelectInput";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OTEntry = () => {
   const navigate = useNavigate();

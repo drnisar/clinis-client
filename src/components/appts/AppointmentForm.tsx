@@ -1,4 +1,9 @@
-import { Controller, FieldValues, useForm } from "react-hook-form";
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import {
@@ -9,23 +14,23 @@ import { useGetAllRegistrations } from "../../hooks/useRegistration";
 
 export type FormData = {
   _id?: string;
-  reg: {
+  regSelect?: {
     value: string;
     label: string;
   };
-  apptDate: string;
-  disease: string;
-  apptPlan: string;
-  comorbids: string;
-  socialConnect: string;
-  apptNotes: string;
+  reg?: string;
+  apptDate?: string;
+  disease?: string;
+  apptPlan?: string;
+  comorbids?: string;
+  socialConnect?: string;
+  apptNotes?: string;
 };
 
 const AppointmentForm = () => {
   const { state } = useLocation();
   const { appointment, isEditing } = state;
   const {
-    reg,
     _id,
     apptDate,
     disease,
@@ -35,12 +40,7 @@ const AppointmentForm = () => {
     apptNotes,
   } = appointment;
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    control,
-  } = useForm<FieldValues>({
+  const { register, handleSubmit, control } = useForm<FieldValues>({
     defaultValues: isEditing
       ? {
           _id: _id,
@@ -56,23 +56,25 @@ const AppointmentForm = () => {
 
   const { data: regData } = useGetAllRegistrations();
 
-  const newArr = regData?.map((reg) => {
-    return { value: reg._id, label: reg.name + " - " + reg.MRN };
-  });
+  const newArr = (regData as { _id: string; name: string; MRN: string }[])?.map(
+    (reg) => {
+      return { value: reg._id, label: reg.name + " - " + reg.MRN };
+    }
+  );
 
   const { mutate: editMutate } = useEditAppointment();
   const { mutate: addMutate } = useCreateAppointment();
 
   const navigate = useNavigate();
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (isEditing) {
       data = { ...data, reg: appointment.reg._id };
       editMutate(data);
     } else {
       data = {
         ...data,
-        reg: data.reg.value,
+        reg: data.regSelect.value,
         apptDate: new Date(data.apptDate).toISOString().split("T")[0],
       };
       addMutate(data);

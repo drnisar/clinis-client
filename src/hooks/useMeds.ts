@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "../components/api-client/apiClient";
-import { table } from "console";
 
 export type MedFormData = {
   _id: string;
@@ -16,7 +15,7 @@ export const useEnterNewMed = () => {
   return useMutation({
     mutationFn: (data: MedFormData) => apiClient.post("med", data),
     onSuccess: () => {
-      queryClient.invalidateQueries("med");
+      queryClient.invalidateQueries({ queryKey: ["med"] });
     },
   });
 };

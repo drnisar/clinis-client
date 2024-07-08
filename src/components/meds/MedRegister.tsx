@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FieldValues, useForm } from "react-hook-form";
 import { useEnterNewMed } from "../../hooks/useMeds";
@@ -12,7 +12,7 @@ type MedFormData = {
 };
 
 const MedRegister = () => {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<string[]>([]);
 
   const submitData = useEnterNewMed();
 

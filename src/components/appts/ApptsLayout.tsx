@@ -1,7 +1,6 @@
-import { Button } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
-import Appointments, { Appointment } from "../Appointments";
 import { useGetAllAppointments } from "../../hooks/useAppointments";
+import Appointments, { Appointment } from "../Appointments";
 
 const ApptsLayout = () => {
   const { data, error } = useGetAllAppointments();

@@ -1,11 +1,9 @@
-import React from "react";
-import { Table } from "react-bootstrap";
-import { useParams, useOutletContext, Link } from "react-router-dom";
+import { Link, useOutletContext, useParams } from "react-router-dom";
 
 const RegistrationDetails = () => {
   const { id } = useParams<{ id: string }>();
 
-  const data = useOutletContext();
+  const data: any[] = useOutletContext();
 
   const reg = data?.find((reg: any) => reg._id === id);
   const { _id, name, age, gender, email, phone, MRN, regDate } = reg || {};

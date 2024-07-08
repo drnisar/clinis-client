@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ModalComponent from "../smallParts/ModalComponent";
 import Prescription from "./Prescription";
 import { Button } from "react-bootstrap";

@@ -1,4 +1,4 @@
-export const refineMRN = (MRN) => {
+export const refineMRN = (MRN: string) => {
   const pattern1 = /^[1-9]-\d{4}$/;
   if (pattern1.test(MRN)) {
     const first = MRN.split("-")[0];

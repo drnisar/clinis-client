@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { apiClient } from "../components/api-client/apiClient";
 import { FormData } from "../components/appts/AppointmentForm";
 
@@ -34,8 +33,6 @@ export interface Appointment {
 // };
 
 export const useGetAllAppointments = () => {
-  const queryClient = useQueryClient();
-
   return useQuery({
     queryKey: ["appointments"],
     queryFn: async () => {
@@ -59,7 +56,7 @@ export const useEditAppointment = () => {
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries("appointments");
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
     },
   });
 };
@@ -72,7 +69,7 @@ export const useCreateAppointment = () => {
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries("appointments");
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
     },
   });
   return mutation;

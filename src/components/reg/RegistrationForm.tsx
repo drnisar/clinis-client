@@ -1,14 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import {
-  Link,
-  redirect,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { apiClient } from "../api-client/apiClient";
 
 interface FormData {
@@ -25,11 +18,7 @@ const RegistrationForm = () => {
   const { isEditing, reg } = location.state as any;
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
+  const { register, handleSubmit } = useForm<FormData>({
     defaultValues: isEditing
       ? {
           name: reg.name,
@@ -46,17 +35,17 @@ const RegistrationForm = () => {
 
   const postMutation = useMutation({
     mutationFn: (data: FormData) => apiClient.post("reg", data),
-    onSuccess: (newReg) => {
-      queryClient.invalidateQueries("reg");
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reg"] });
       //   navigate(`/registration/${newReg?.data?._id}`);
       //   console.log(newReg.data._id);
     },
     onError: (error: any) => {
       alert(error);
     },
-    onSettled(data, error) {
+    onSettled(data: any, error: any) {
       if (data) {
-        navigate(`/registration/${data.data._id}`);
+        navigate(`/registration/${(data as any).data._id}`);
       }
       if (error) {
         alert("Error adding patient");
@@ -67,7 +56,7 @@ const RegistrationForm = () => {
   const editMutation = useMutation({
     mutationFn: (data: FormData) => apiClient.put(`reg/${reg._id}`, data),
     onSuccess: () => {
-      queryClient.invalidateQueries("reg");
+      queryClient.invalidateQueries({ queryKey: ["reg"] });
     },
     onError: (error: any) => {
       alert(error);

@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
-import Registration from "../components/reg/Registration";
 import { useQuery } from "@tanstack/react-query";
+import { Link, Outlet } from "react-router-dom";
 import { apiClient } from "../components/api-client/apiClient";
-import { Button } from "react-bootstrap";
+import Registration from "../components/reg/Registration";
 
 export interface Reg {
   _id: string;
@@ -15,13 +13,7 @@ export interface Reg {
   MRN: string;
 }
 const RegistrationLayout = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const {
-    data: registrations,
-    isLoading,
-    isError,
-    error,
-  } = useQuery<Reg[]>({
+  const { data: registrations } = useQuery<Reg[]>({
     queryKey: ["reg"],
     queryFn: async () => {
       const response = await apiClient.get<Reg[]>("reg");
@@ -43,10 +35,10 @@ const RegistrationLayout = () => {
 
         <div className="row">
           <div className="col-4">
-            <Registration registrations={registrations} />
+            <Registration registrations={registrations ?? []} />
           </div>
           <div className="col-8">
-            <Outlet context={registrations} />
+            <Outlet context={registrations ?? []} />
           </div>
         </div>
       </div>

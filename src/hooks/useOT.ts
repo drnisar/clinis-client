@@ -1,11 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "../components/api-client/apiClient";
-import { useEffect, useState } from "react";
-import Joi from "joi";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useContext } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Joi from "joi";
+import { useEffect, useState } from "react";
+import { apiClient } from "../components/api-client/apiClient";
 
 export type OT = {
   _id: string;
@@ -70,7 +67,7 @@ export const useCreateOT = () => {
   return useMutation({
     mutationFn: (data: FormData) => apiClient.post("ot", data),
     onSuccess: () => {
-      queryClient.invalidateQueries("ot");
+      queryClient.invalidateQueries({ queryKey: ["ot"] });
     },
   });
 };
@@ -95,7 +92,7 @@ export const useEditOT = (id: string) => {
   return useMutation({
     mutationFn: (data: FormData) => apiClient.put(`ot/${id}`, data),
     onSuccess: () => {
-      queryClient.invalidateQueries("ot");
+      queryClient.invalidateQueries({ queryKey: ["ot"] });
     },
   });
 };
@@ -105,7 +102,7 @@ export const useDeleteOT = () => {
   return useMutation({
     mutationFn: (id: string) => apiClient.delete(`ot/${id}`),
     onSuccess: () => {
-      queryClient.invalidateQueries("ot");
+      queryClient.invalidateQueries({ queryKey: ["ot"] });
     },
   });
 };
@@ -131,7 +128,7 @@ export const useCreateOTNotes = () => {
     mutationFn: (data: SurgeryNotesFormData) =>
       apiClient.post("surgnotes", data),
     onSuccess: () => {
-      queryClient.invalidateQueries(["surgnotes"]); // Update the argument to an array of strings
+      queryClient.invalidateQueries({ queryKey: ["surgnotes"] }); // Update the argument to an array of strings
     },
     onError: (error) => {
       console.error(error);

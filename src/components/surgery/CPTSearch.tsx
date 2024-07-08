@@ -1,17 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import SelectInput from "../smallParts/SelectInput";
-import { useForm } from "react-hook-form";
-import { apiClient } from "../api-client/apiClient";
-import { useState } from "react";
 import CreatableSelect from "react-select/creatable";
-import { cp } from "fs";
+import { apiClient } from "../api-client/apiClient";
 
 const CPTSearch = () => {
-  //useForm for getting values from the inputs
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
   // get values from the api
   const cptQuery = useQuery({
     queryKey: ["cpt"],
@@ -20,7 +11,7 @@ const CPTSearch = () => {
       return response.data;
     },
   });
-  const options = cptQuery?.data?.map((item) => ({
+  const options = (cptQuery?.data as Array<any>)?.map((item) => ({
     label: item.Descriptions,
     value: item.CPT,
   }));
