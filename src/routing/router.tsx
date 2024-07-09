@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         children: [],
       },
       {
-        path: "surgery/new",
+        path: "surgery/:date",
         element: <SurgeryListCreate />,
       },
       {

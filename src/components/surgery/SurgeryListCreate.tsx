@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { OT, useGetAllOT } from "../../hooks/useOT";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 type OTData = OT[];
 const SurgeryListCreate = () => {
   const { data, error } = useGetAllOT();
   const getAllOTData = data as OTData;
+  const params = useParams();
+  console.log("params", params);
 
-  const [selectedDate, setSelectedDate] = useState("");
-
-  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedDate(event.target.value);
-  };
-
+  const selectedDate = params.date;
   const filteredData = getAllOTData?.filter(
     (ot) =>
       new Date(ot.surgDate).toISOString().split("T")[0] === selectedDate ||
@@ -21,18 +19,7 @@ const SurgeryListCreate = () => {
   console.log(getAllOTData, error, selectedDate, filteredData);
   return (
     <div className="p-2">
-      <div className="mb-3 col-md-4 mx-auto">
-        <label htmlFor="surgeryDate" className="form-label">
-          Surgery Date
-        </label>
-        <input
-          type="date"
-          className="form-control"
-          id="surgeryDate"
-          value={selectedDate}
-          onChange={handleDateChange}
-        />
-      </div>
+      <h4>Surgery Schedule for {selectedDate}</h4>
       <div>
         <ul>
           {filteredData?.map((ot) => (

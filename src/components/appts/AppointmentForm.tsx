@@ -70,6 +70,7 @@ const AppointmentForm = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (isEditing) {
       data = { ...data, reg: appointment.reg._id };
+      console.log("Edit Data", data);
       editMutate(data);
     } else {
       data = {
@@ -77,6 +78,8 @@ const AppointmentForm = () => {
         reg: data.regSelect.value,
         apptDate: new Date(data.apptDate).toISOString().split("T")[0],
       };
+      delete data.regSelect;
+      console.log(data);
       addMutate(data);
     }
     navigate("/appointments");
@@ -131,7 +134,7 @@ const AppointmentForm = () => {
                   placeholder="Select Registration"
                 />
               )}
-              name="reg"
+              name="regSelect"
               control={control}
             />
           </div>

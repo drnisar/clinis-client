@@ -64,7 +64,26 @@ const Appointments = ({ appointments }: Props) => {
                   {appt.reg.name} <strong>{appt.reg.MRN}</strong>
                 </p>
               </NavLink>
-            ) : undefined
+            ) : (
+              <NavLink
+                to={`/appointments/${appt._id}`}
+                key={appt._id}
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "list-group-item-warning"
+                    : isActive
+                    ? "list-group-item list-group-item-action active"
+                    : "list-group-item"
+                }
+              >
+                <strong>
+                  {dayNames[new Date(appt.apptDate).getDay()]}
+                  {", "}
+                  {new Date(appt.apptDate).toLocaleDateString()}
+                </strong>
+                <p>Registration Deleted</p>
+              </NavLink>
+            )
           )
         ) : (
           <p>No appointments available</p>

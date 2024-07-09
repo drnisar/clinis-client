@@ -37,38 +37,40 @@ const AppointmentDetails = () => {
   return (
     <div>
       <dl>
-        <div className="bg-light">
-          <dt>Name:</dt>
-          <dd>{reg.name}</dd>
-          <div className="row">
-            <div className="col">
-              <dt>Age:</dt>
-              <dd>{reg.age}</dd>
+        {reg && (
+          <div className="bg-light">
+            <dt>Name:</dt>
+            <dd>{reg.name}</dd>
+            <div className="row">
+              <div className="col">
+                <dt>Age:</dt>
+                <dd>{reg.age}</dd>
+              </div>
+              <div className="col">
+                <dt>Gender</dt>
+                <dd>{reg.gender}</dd>
+              </div>
+              <div className="col">
+                <dt>MRN</dt>
+                <dd>{reg.MRN}</dd>
+              </div>
             </div>
-            <div className="col">
-              <dt>Gender</dt>
-              <dd>{reg.gender}</dd>
-            </div>
-            <div className="col">
-              <dt>MRN</dt>
-              <dd>{reg.MRN}</dd>
+            <div className="row">
+              <div className="col">
+                <dt>Email</dt>
+                <dd>{reg.email}</dd>
+              </div>
+              <div className="col">
+                <dt>Phone</dt>
+                <dd>{reg.phone}</dd>
+              </div>
+              <div className="col">
+                <dt>Appointment Date</dt>
+                <dd>{new Date(apptDate).toLocaleDateString()}</dd>
+              </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col">
-              <dt>Email</dt>
-              <dd>{reg.email}</dd>
-            </div>
-            <div className="col">
-              <dt>Phone</dt>
-              <dd>{reg.phone}</dd>
-            </div>
-            <div className="col">
-              <dt>Appointment Date</dt>
-              <dd>{new Date(apptDate).toLocaleDateString()}</dd>
-            </div>
-          </div>
-        </div>
+        )}
         <dt>Disease</dt>
         <dd>{disease}</dd>
         <dt>Co-morbids</dt>

@@ -1,8 +1,10 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useGetAllAppointments } from "../../hooks/useAppointments";
+import { useState } from "react";
 
 const SurgeryLayout = () => {
   const { data, error } = useGetAllAppointments();
+  const navigate = useNavigate();
 
   if (error) return <p>Error: {error.message}</p>;
 
@@ -11,19 +13,32 @@ const SurgeryLayout = () => {
       <div className="container">
         <div className="row">
           <h3>Surgery List</h3>
-          <Link
-            to="/surgery/new"
-            state={{
-              isEditing: false,
-            }}
-          >
-            {" "}
-            + Create OT List
-          </Link>
-          <div className="row">
-            <label htmlFor="otDate">Select Date</label>
-            <select name="" id="otDate"></select>
+          <div className="col">
+            <div className="mb-3">
+              <label htmlFor="" className="form-label">
+                Select Date for creating/ editing OT List
+              </label>
+              <input
+                type="date"
+                className="form-input"
+                onChange={(e) => {
+                  navigate(`/surgery/${e.target.value}`);
+                }}
+              />
+            </div>
           </div>
+          <div className="col">
+            <Link
+              to="/surgery/new"
+              state={{
+                isEditing: false,
+              }}
+            >
+              {" "}
+              + Create OT List
+            </Link>
+          </div>
+
           <div>
             <Outlet context={data} />
           </div>
