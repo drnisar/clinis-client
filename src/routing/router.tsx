@@ -17,6 +17,8 @@ import Layout from "./Layout";
 import ApptsLayout from "../components/appts/ApptsLayout";
 import AppointmentDetails from "../components/appts/AppointmentDetails";
 import AppointmentForm from "../components/appts/AppointmentForm";
+import SurgeryLayout from "../components/surgery/surgeryLayout";
+import SurgeryListCreate from "../components/surgery/SurgeryListCreate";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +57,15 @@ const router = createBrowserRouter([
           { path: ":id/edit", element: <AppointmentForm /> },
           { path: "new", element: <AppointmentForm /> },
         ],
+      },
+      {
+        path: "surgery",
+        element: <SurgeryLayout />,
+        children: [],
+      },
+      {
+        path: "surgery/new",
+        element: <SurgeryListCreate />,
       },
       {
         path: "addregistration",

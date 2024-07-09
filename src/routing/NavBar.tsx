@@ -20,8 +20,8 @@ const NavBar = () => {
           <NavLink to="/appointments" className="nav-link">
             Appointments
           </NavLink>
-          <NavLink to="/otlist" className="nav-link">
-            OT List
+          <NavLink to="/surgery" className="nav-link">
+            Surgery
           </NavLink>
           <NavLink to="/calendar" className="nav-link">
             Calendar View

@@ -42,28 +42,30 @@ const Appointments = ({ appointments }: Props) => {
     <div>
       <ListGroup>
         {appointments ? (
-          appointments.map((appt) => (
-            <NavLink
-              to={`/appointments/${appt._id}`}
-              key={appt._id}
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "list-group-item-warning"
-                  : isActive
-                  ? "list-group-item list-group-item-action active"
-                  : "list-group-item"
-              }
-            >
-              <strong>
-                {dayNames[new Date(appt.apptDate).getDay()]}
-                {", "}
-                {new Date(appt.apptDate).toLocaleDateString()}
-              </strong>
-              <p>
-                {appt.reg.name} <strong>{appt.reg.MRN}</strong>
-              </p>
-            </NavLink>
-          ))
+          appointments.map((appt) =>
+            appt.reg ? (
+              <NavLink
+                to={`/appointments/${appt._id}`}
+                key={appt._id}
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "list-group-item-warning"
+                    : isActive
+                    ? "list-group-item list-group-item-action active"
+                    : "list-group-item"
+                }
+              >
+                <strong>
+                  {dayNames[new Date(appt.apptDate).getDay()]}
+                  {", "}
+                  {new Date(appt.apptDate).toLocaleDateString()}
+                </strong>
+                <p>
+                  {appt.reg.name} <strong>{appt.reg.MRN}</strong>
+                </p>
+              </NavLink>
+            ) : undefined
+          )
         ) : (
           <p>No appointments available</p>
         )}
@@ -73,3 +75,5 @@ const Appointments = ({ appointments }: Props) => {
 };
 
 export default Appointments;
+
+// if no reg then p. no reg found against the appointment
