@@ -1,6 +1,5 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useGetAllAppointments } from "../../hooks/useAppointments";
-import { useState } from "react";
 
 const SurgeryLayout = () => {
   const { data, error } = useGetAllAppointments();

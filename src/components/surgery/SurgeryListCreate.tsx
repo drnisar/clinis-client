@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { OT, useGetAllOT } from "../../hooks/useOT";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 type OTData = OT[];
 const SurgeryListCreate = () => {
