@@ -11,7 +11,6 @@ import RegError from "../components/reg/RegError";
 import RegistrationDetails from "../components/reg/RegistrationDetails";
 import RegistrationForm from "../components/reg/RegistrationForm";
 import CPTSearch from "../components/surgery/CPTSearch";
-import OTEntry from "../components/surgery/OTEntry";
 import RegistrationLayout from "../layouts/RegistrationLayout";
 import Layout from "./Layout";
 import ApptsLayout from "../components/appts/ApptsLayout";
@@ -19,6 +18,8 @@ import AppointmentDetails from "../components/appts/AppointmentDetails";
 import AppointmentForm from "../components/appts/AppointmentForm";
 import SurgeryLayout from "../components/surgery/surgeryLayout";
 import SurgeryListCreate from "../components/surgery/SurgeryListCreate";
+import SurgeryListForm from "../components/surgery/SurgeryListForm";
+import SurgeryDelete from "../components/surgery/SurgeryDelete";
 
 const router = createBrowserRouter([
   {
@@ -42,10 +43,6 @@ const router = createBrowserRouter([
             path: ":id/delete",
             element: <RegDelete />,
           },
-          {
-            path: ":id/ot",
-            element: <OTEntry />,
-          },
         ],
       },
 
@@ -66,6 +63,14 @@ const router = createBrowserRouter([
       {
         path: "surgery/:date",
         element: <SurgeryListCreate />,
+      },
+      {
+        path: "surgery/:date/form",
+        element: <SurgeryListForm />,
+      },
+      {
+        path: "surgery/:id/delete",
+        element: <SurgeryDelete />,
       },
       {
         path: "addregistration",

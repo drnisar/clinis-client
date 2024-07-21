@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useGetAllAppointments } from "../../hooks/useAppointments";
 
 const SurgeryLayout = () => {
@@ -19,24 +19,14 @@ const SurgeryLayout = () => {
               </label>
               <input
                 type="date"
-                className="form-input"
+                className="form-control"
                 onChange={(e) => {
                   navigate(`/surgery/${e.target.value}`);
                 }}
               />
             </div>
           </div>
-          <div className="col">
-            <Link
-              to="/surgery/new"
-              state={{
-                isEditing: false,
-              }}
-            >
-              {" "}
-              + Create OT List
-            </Link>
-          </div>
+          <div className="col"></div>
 
           <div>
             <Outlet context={data} />

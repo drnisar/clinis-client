@@ -7,7 +7,7 @@ const CPTSearch = () => {
   const cptQuery = useQuery({
     queryKey: ["cpt"],
     queryFn: async () => {
-      const response = await apiClient.get("cpt");
+      const response = await apiClient.get("cpts");
       return response.data;
     },
   });

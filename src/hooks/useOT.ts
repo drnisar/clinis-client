@@ -9,9 +9,11 @@ export type OT = {
   reg: {
     _id: string;
     name: string;
+    age: number;
+    MRN: string;
   };
   surgDate: string;
-  otNumber: number;
+  otNumber: string;
   surgType: string;
   disease: string;
   surgery: string;
@@ -21,10 +23,10 @@ export type OT = {
   comments: string;
 };
 
-export type FormData = {
+export type OTFormData = {
   reg: string;
   surgDate: Date;
-  otNumber?: number;
+  otNumber?: string;
   surgType: string;
   disease: string;
   surgery: string;
@@ -65,7 +67,7 @@ export const useCreateOT = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: FormData) => apiClient.post("ot", data),
+    mutationFn: (data: OTFormData) => apiClient.post("ot", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ot"] });
     },
@@ -206,3 +208,37 @@ export const useSurgeryNotesResolver = joiResolver(
     instructions: Joi.string().required().label("Instructions"),
   })
 );
+
+export const useGetAnaesthList = () => {
+  return [
+    { value: "General", label: "General" },
+    { value: "Spinal", label: "Spinal" },
+    { value: "Local", label: "Local" },
+    { value: "Epidural", label: "Epidural" },
+    { value: "", label: "" },
+  ];
+};
+
+export const useGetSurgeryTypes = () => {
+  return [
+    { value: "Elective", label: "Elective" },
+    { value: "Emergency", label: "Emergency" },
+  ];
+};
+
+export const useGetPatientTypes = () => {
+  return [
+    { value: "Regular", label: "Regular" },
+    { value: "IBP", label: "IBP" },
+    { value: "Sehat Card IBP", label: "Sehat Card IBP" },
+  ];
+};
+
+export const useGetOTNames = () => {
+  const options = [];
+
+  for (let i = 1; i <= 20; i++) {
+    options.push({ value: `${i}`, label: `${i}` });
+  }
+  return options;
+};

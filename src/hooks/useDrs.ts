@@ -40,6 +40,32 @@ export const useGetAllDrs = () => {
   });
 };
 
+export const useGetDrsForSelect = () => {
+  return useQuery({
+    queryKey: ["drsForSelect"],
+    queryFn: async () => {
+      const response = await apiClient.get("drs");
+
+      if (response.status !== 200) {
+        throw new Error("Error fetching registrations");
+      }
+
+      const drs = response.data;
+
+      const drsForSelect: { value: string; label: string }[] = (
+        drs as { _id: string; name: string; designation: string }[]
+      )?.map((dr) => {
+        return {
+          value: dr.name,
+          label: dr.name + " - " + dr.designation.toUpperCase(),
+        };
+      });
+
+      return drsForSelect;
+    },
+  });
+};
+
 export const useGetAllOT = () => {
   return useQuery({
     queryKey: ["ot"],
