@@ -1,4 +1,5 @@
 import { Link, useOutletContext, useParams } from "react-router-dom";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const RegistrationDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -44,17 +45,14 @@ const RegistrationDetails = () => {
         to={`/registration/${_id}/edit`}
         state={{ isEditing: true, reg: reg }}
       >
-        Edit
+        <FaEdit />
       </Link>
       <Link
         to={`/registration/${_id}/delete`}
         state={{ _id: _id }}
         className="mx-2 text-danger"
       >
-        Delete
-      </Link>
-      <Link to={`/registration/${_id}/ot`} state={{ _id: _id }}>
-        OT List
+        <FaTrashAlt />
       </Link>
     </div>
   );

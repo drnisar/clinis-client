@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "../components/api-client/apiClient";
 
 export type Registration = {
-  _id: string;
+  _id?: string;
   name: string;
   age: number;
   gender: string;
@@ -47,4 +47,35 @@ export const useGetRegistrationsForSelect = () => {
       return regForSelect;
     },
   });
+};
+
+export const usePostRegistration = () => {
+  const queryClient = useQueryClient();
+
+  const postMutation = useMutation({
+    mutationFn: (data: Registration) => apiClient.post("reg", data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reg"] });
+    },
+    onError: (error: any) => {
+      alert(error);
+    },
+  });
+  return postMutation;
+};
+
+export const useEditRegistration = () => {
+  const queryClient = useQueryClient();
+
+  const editMutation = useMutation({
+    mutationFn: ({ _id, ...rest }: Registration) =>
+      apiClient.put(`reg/${_id}`, rest),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reg"] });
+    },
+    onError: (error: any) => {
+      alert(error);
+    },
+  });
+  return editMutation;
 };

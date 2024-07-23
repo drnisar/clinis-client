@@ -1,5 +1,6 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import { OT, useGetAllOT } from "../../hooks/useOT";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 type OTData = OT[];
 
@@ -10,11 +11,13 @@ const SurgeryListCreate = () => {
   const { pathname } = useLocation();
 
   const selectedDate = params.date;
-  const filteredData = getAllOTData?.filter(
-    (ot) =>
-      new Date(ot.surgDate).toISOString().split("T")[0] === selectedDate ||
-      new Date().toISOString().split("T")[0] === selectedDate
-  );
+  const filteredData = getAllOTData
+    ?.filter(
+      (ot) =>
+        new Date(ot.surgDate).toISOString().split("T")[0] === selectedDate ||
+        new Date().toISOString().split("T")[0] === selectedDate
+    )
+    .sort((a, b) => Number(a.otNumber) - Number(b.otNumber));
 
   return (
     <div className="p-5">
@@ -31,7 +34,7 @@ const SurgeryListCreate = () => {
       </div>
 
       <div>
-        <table className="table table-bordered table-sm table-responsive">
+        <table className="table table-bordered table-sm table-responsive-xl">
           <thead>
             <th>S. No</th>
             <th>MRN</th>
@@ -55,12 +58,14 @@ const SurgeryListCreate = () => {
                 <td>{record.otNumber}</td>
                 <td>{record.comments}</td>
                 <td>
-                  <button className="btn btn-link">edit</button>
+                  <button className="btn btn-link btn-primary">
+                    <FaEdit />
+                  </button>
                   <Link
                     to={`/surgery/${record._id}/delete`}
-                    state={{ _id: record._id, date: record.surgDate }}
+                    state={{ _id: record._id, date: selectedDate }}
                   >
-                    delete
+                    <FaTrashAlt className="link link-danger" />
                   </Link>
                 </td>
               </tr>

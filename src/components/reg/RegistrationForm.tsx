@@ -1,26 +1,22 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { apiClient } from "../api-client/apiClient";
-
-interface FormData {
-  name: string;
-  age: number;
-  gender: string;
-  email: string;
-  phone: string;
-  MRN: string;
-}
+import {
+  useEditRegistration,
+  usePostRegistration,
+  Registration,
+} from "../../hooks/useRegistration";
+import { refineMRN } from "../../functions/mrn";
 
 const RegistrationForm = () => {
   const location = useLocation();
   const { isEditing, reg } = location.state as any;
   const navigate = useNavigate();
 
-  const { register, handleSubmit } = useForm<FormData>({
+  const { register, handleSubmit, setValue } = useForm<Registration>({
     defaultValues: isEditing
       ? {
+          _id: reg._id,
           name: reg.name,
           age: reg.age,
           gender: reg.gender,
@@ -31,47 +27,18 @@ const RegistrationForm = () => {
       : undefined,
   });
 
-  const queryClient = useQueryClient();
+  const { mutate: postMutate } = usePostRegistration();
+  const { mutate: editMutate } = useEditRegistration();
 
-  const postMutation = useMutation({
-    mutationFn: (data: FormData) => apiClient.post("reg", data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reg"] });
-      //   navigate(`/registration/${newReg?.data?._id}`);
-      //   console.log(newReg.data._id);
-    },
-    onError: (error: any) => {
-      alert(error);
-    },
-    onSettled(data: any, error: any) {
-      if (data) {
-        navigate(`/registration/${(data as any).data._id}`);
-      }
-      if (error) {
-        alert("Error adding patient");
-      }
-    },
-  });
-
-  const editMutation = useMutation({
-    mutationFn: (data: FormData) => apiClient.put(`reg/${reg._id}`, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reg"] });
-    },
-    onError: (error: any) => {
-      alert(error);
-    },
-  });
-
-  const onSubmit = (data: FormData) => {
-    // data.MRN = refineMRN(data.MRN);
-
+  const onSubmit = (data: Registration) => {
     if (isEditing) {
-      editMutation.mutate(data);
+      editMutate(data);
       navigate(`/registration/${reg._id}`);
+      console.log("edit data", data);
       return;
     } else {
-      postMutation.mutate(data);
+      postMutate(data);
+      navigate(`/registration`);
     }
   };
   return (
@@ -129,6 +96,9 @@ const RegistrationForm = () => {
                 size="sm"
                 type="text"
                 {...register("MRN")}
+                onBlur={(e) => {
+                  setValue("MRN", refineMRN(e.target.value) || e.target.value);
+                }}
               />
             </Form.Group>
           </div>

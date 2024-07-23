@@ -5,7 +5,7 @@ export const refineMRN = (MRN: string) => {
     let last = MRN.split("-")[1];
     if (last.length == 3) last = "0" + last;
 
-    return "K03-" + first + "0000000" + last;
+    return "K03-" + first + "000000" + last;
   }
 
   const pattern2 = /^[1-9]\d{6}$/;

@@ -100,10 +100,6 @@ const router = createBrowserRouter([
         path: "medsmodal",
         element: <MedsModal />,
       },
-      // {
-      //   path: "surgnotes",
-      //   element: <SurgeryNotesModal />,
-      // },
       {
         path: "addnewdr",
         element: <AddDr />,

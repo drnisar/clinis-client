@@ -2,6 +2,8 @@ import { Button } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { apiClient } from "../api-client/apiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { FaUndo, FaTrashAlt } from "react-icons/fa";
+import { Spinner } from "react-bootstrap";
 
 const RegDelete = () => {
   const { _id } = useLocation().state as any;
@@ -26,12 +28,25 @@ const RegDelete = () => {
   return (
     <div>
       <h3>Are you sure to delete the selected record?</h3>
+      {deleteMutation.isPending ? (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading ...</span>
+        </Spinner>
+      ) : (
+        <>
+          <Button
+            variant="link"
+            onClick={() => onDelete(_id)}
+            className="link link-danger"
+          >
+            <FaTrashAlt />
+          </Button>
 
-      <Button variant="link" onClick={() => onDelete(_id)}>
-        Delete
-      </Button>
-
-      <Link to={`/registration/${_id}`}>Cancel</Link>
+          <Link to={`/registration/${_id}`}>
+            <FaUndo />
+          </Link>
+        </>
+      )}
     </div>
   );
 };
