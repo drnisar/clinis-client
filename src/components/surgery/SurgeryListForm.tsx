@@ -1,5 +1,5 @@
 import { Controller, useForm } from "react-hook-form";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Select from "react-select";
 import "../../css-custom/form.css";
 import { useGetDrsForSelect } from "../../hooks/useDrs";
@@ -10,31 +10,54 @@ import {
   useGetPatientTypes,
   useGetSurgeryTypes,
   OTFormData,
+  useEditOT,
 } from "../../hooks/useOT";
 import { useGetRegistrationsForSelect } from "../../hooks/useRegistration";
 
 const SurgeryListForm = () => {
-  const params = useParams();
+  // const params = useParams();
   const navigate = useNavigate();
-  const surgDate = new Date(params.date ?? "");
+  const { isEditing, defaultValues: defValues } = useLocation().state || {};
+  // const surgDate = new Date(params.date ?? "");
   const { data: regForSelect } = useGetRegistrationsForSelect();
   const { data: drsList } = useGetDrsForSelect();
   const { mutate: addMutate } = useCreateOT();
+  const { mutate: editMutate } = useEditOT();
   const anaesthList = useGetAnaesthList();
   const surgTypes = useGetSurgeryTypes();
   const ptTypes = useGetPatientTypes();
   const otNumbers = useGetOTNames();
 
-  const { handleSubmit, register, control } = useForm<OTFormData>();
+  const { handleSubmit, register, control } = useForm<OTFormData>(
+    isEditing && {
+      defaultValues: {
+        disease: defValues.disease,
+        surgery: defValues.surgery,
+        surgeon: defValues.surgeon,
+        anaesthesia: defValues.anaesthesia,
+        surgType: defValues.surgType,
+        ptType: defValues.ptType,
+        otNumber: defValues.otNumber,
+        comments: defValues.comments,
+        // surgDate: defValues.date,
+      },
+    }
+  );
 
   const onSubmit = (data: OTFormData) => {
     (e: { preventDefault: () => any }) => e.preventDefault();
-    data = { ...data, surgDate };
-    addMutate(data);
-    navigate(-1);
+    data = { ...data, surgDate: defValues.surgDate, reg: defValues.reg._id };
+    if (isEditing) {
+      data = { ...data, _id: defValues._id };
+      editMutate(data);
+      navigate(-1);
+    } else {
+      addMutate(data);
+      navigate(-1);
+    }
   };
 
-  console.log(surgDate);
+  console.log(defValues);
   return (
     <div>
       <div className="d-flex justify-content-center p-3">
@@ -44,26 +67,34 @@ const SurgeryListForm = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="mb-2">
-            <label htmlFor="reg" className="form-label">
-              Select Registered Patient
-            </label>
-            <Controller
-              name="reg"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  id="reg"
-                  options={regForSelect} // Make sure newArr is defined and contains your options
-                  className="basic-single"
-                  onChange={(val) => field.onChange(val?.value)}
-                  value={regForSelect?.find(
-                    (option) => option.value === field.value
+            {!isEditing ? (
+              <div>
+                <label htmlFor="reg" className="form-label">
+                  Select Registered Patient
+                </label>
+                <Controller
+                  name="reg"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      id="reg"
+                      options={regForSelect} // Make sure newArr is defined and contains your options
+                      className="basic-single"
+                      onChange={(val) => field.onChange(val?.value)}
+                      value={regForSelect?.find(
+                        (option) => option.value === field.value
+                      )}
+                      isClearable={true}
+                    />
                   )}
-                  isClearable={true}
                 />
-              )}
-            />
+              </div>
+            ) : (
+              <h6>
+                {defValues.reg.name} -- {defValues.reg.MRN}
+              </h6>
+            )}
           </div>
           <div className="mb-2">
             <label htmlFor="" className="form-label">
@@ -186,7 +217,7 @@ const SurgeryListForm = () => {
                     options={otNumbers}
                     className="basic-single"
                     onChange={(val) => field.onChange(val?.value)}
-                    value={anaesthList?.find(
+                    value={otNumbers?.find(
                       (option) => option.value === field.value
                     )}
                   />

@@ -1,4 +1,5 @@
 import { Link, useOutletContext, useParams } from "react-router-dom";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const AppointmentDetails = () => {
   const appointmentData = useOutletContext() as Array<{
@@ -83,7 +84,10 @@ const AppointmentDetails = () => {
         <dd>{apptNotes}</dd>
       </dl>
       <Link to={`edit`} state={{ isEditing: true, appointment: appointment }}>
-        edit
+        <FaEdit />
+      </Link>
+      <Link to={`delete`} className="link link-danger mx-3">
+        <FaTrashAlt />
       </Link>
     </div>
   );

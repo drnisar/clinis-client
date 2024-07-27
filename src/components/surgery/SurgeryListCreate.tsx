@@ -21,6 +21,28 @@ const SurgeryListCreate = () => {
 
   return (
     <div className="p-5">
+      <style>{`
+        @media print {
+          .link, .navigation, .footer, .header, .sidebar {
+            display: none !important;
+          }
+          body, html {
+            background: none !important;
+            color: #000 !important;
+          }
+          table {
+            page-break-inside: auto;
+          }
+          tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+          }
+          th, td {
+            page-break-inside: avoid;
+            border: 1px solid #000;
+          }
+        }
+      `}</style>
       <div className="col">
         <h4>Surgery Schedule for {selectedDate}</h4>
       </div>
@@ -58,14 +80,25 @@ const SurgeryListCreate = () => {
                 <td>{record.otNumber}</td>
                 <td>{record.comments}</td>
                 <td>
-                  <button className="btn btn-link btn-primary">
-                    <FaEdit />
-                  </button>
+                  <Link
+                    to={`/surgery/${record._id}/edit`}
+                    state={{
+                      isEditing: true,
+                      defaultValues: record,
+                      date: selectedDate,
+                    }}
+                  >
+                    <FaEdit className="link link-primary" />
+                  </Link>
                   <Link
                     to={`/surgery/${record._id}/delete`}
-                    state={{ _id: record._id, date: selectedDate }}
+                    state={{
+                      isEditing: false,
+                      _id: record._id,
+                      date: selectedDate,
+                    }}
                   >
-                    <FaTrashAlt className="link link-danger" />
+                    <FaTrashAlt className="link link-danger mx-3" />
                   </Link>
                 </td>
               </tr>

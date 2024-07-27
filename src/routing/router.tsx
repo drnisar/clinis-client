@@ -20,6 +20,7 @@ import SurgeryLayout from "../components/surgery/surgeryLayout";
 import SurgeryListCreate from "../components/surgery/SurgeryListCreate";
 import SurgeryListForm from "../components/surgery/SurgeryListForm";
 import SurgeryDelete from "../components/surgery/SurgeryDelete";
+import AppointmentDelete from "../components/appts/AppointmentDelete";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,7 @@ const router = createBrowserRouter([
           { path: ":id", element: <AppointmentDetails /> },
           { path: ":id/edit", element: <AppointmentForm /> },
           { path: "new", element: <AppointmentForm /> },
+          { path: ":id/delete", element: <AppointmentDelete /> },
         ],
       },
       {
@@ -68,9 +70,14 @@ const router = createBrowserRouter([
         path: "surgery/:date/form",
         element: <SurgeryListForm />,
       },
+
       {
         path: "surgery/:id/delete",
         element: <SurgeryDelete />,
+      },
+      {
+        path: "surgery/:id/edit",
+        element: <SurgeryListForm />,
       },
       {
         path: "addregistration",

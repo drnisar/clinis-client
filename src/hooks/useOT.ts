@@ -24,6 +24,7 @@ export type OT = {
 };
 
 export type OTFormData = {
+  _id?: string;
   reg: string;
   surgDate: Date;
   otNumber?: string;
@@ -34,6 +35,7 @@ export type OTFormData = {
   surgeon: string;
   ptType: string;
   comments?: string;
+  completed?: boolean;
 };
 
 export type SurgeryNotesFormData = {
@@ -89,10 +91,13 @@ export const useGetAllOT = () => {
   });
 };
 
-export const useEditOT = (id: string) => {
+export const useEditOT = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: FormData) => apiClient.put(`ot/${id}`, data),
+    mutationFn: async ({ _id, ...rest }: OTFormData) => {
+      const response = await apiClient.put(`ot/${_id}`, rest);
+      return response.data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ot"] });
     },
